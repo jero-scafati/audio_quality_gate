@@ -1,0 +1,11 @@
+django
+djangorestframework
+markdown
+django-filter
+python-dotenv
+psycopg2-binary
+torch
+torchaudio
+pyannote.audio
+scikit-learn
+numpy
