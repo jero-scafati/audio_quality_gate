@@ -26,5 +26,16 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Truco para que no pise los módulos de Linux
+    depends_on:
+      - api
 volumes:
   postgres_data:

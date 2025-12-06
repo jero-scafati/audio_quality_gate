@@ -9,3 +9,4 @@ torchaudio
 pyannote.audio
 scikit-learn
 numpy
+django-cors-headers
