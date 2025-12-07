@@ -10,3 +10,4 @@ pyannote.audio
 scikit-learn
 numpy
 django-cors-headers
+huggingface_hub<0.27.0
