@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import AudioAnalysis
 from .serializers import AudioAnalysisSerializer
 from .logic import verify_multispeaker
@@ -9,6 +10,8 @@ class AudioAnalysisViewSet(viewsets.ModelViewSet):
     queryset = AudioAnalysis.objects.all().order_by('-uploaded_at')
     serializer_class = AudioAnalysisSerializer
     parser_classes = (MultiPartParser, FormParser)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['is_multispeaker']
 
     def create(self, request, *args, **kwargs):
         """

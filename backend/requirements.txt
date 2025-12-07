@@ -4,8 +4,8 @@ markdown
 django-filter
 python-dotenv
 psycopg2-binary
-torch
-torchaudio
+torch==2.5.1
+torchaudio==2.5.1
 pyannote.audio
 scikit-learn
 numpy

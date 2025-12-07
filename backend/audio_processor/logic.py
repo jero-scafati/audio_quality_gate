@@ -4,13 +4,41 @@ import torchaudio
 from pyannote.audio import Model, Inference
 from sklearn.preprocessing import normalize
 from sklearn.cluster import AgglomerativeClustering
+try:
+    from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
+except ImportError:
+    try:
+        from pytorch_lightning.callbacks.early_stopping import EarlyStopping
+        from pytorch_lightning.callbacks.model_checkpoint import ModelCheckpoint
+    except ImportError:
+        EarlyStopping = None
+        ModelCheckpoint = None
+
+try:
+    from omegaconf.listconfig import ListConfig
+    from omegaconf.dictconfig import DictConfig
+except ImportError:
+    ListConfig = None
+    DictConfig = None
 
 EMBEDDING_INFERENCE = None
 
 def get_embedding_inference():
     global EMBEDDING_INFERENCE
     if EMBEDDING_INFERENCE is None:
-        print("⏳ Cargando modelo Pyannote (esto pasa solo una vez)...")
+        allowed_globals = []
+        if EarlyStopping is not None: allowed_globals.append(EarlyStopping)
+        if ModelCheckpoint is not None: allowed_globals.append(ModelCheckpoint)
+        if ListConfig is not None: allowed_globals.append(ListConfig)
+        if DictConfig is not None: allowed_globals.append(DictConfig)
+            
+        if allowed_globals:
+            try:
+                torch.serialization.add_safe_globals(allowed_globals)
+                print(f"🛡️  Safe globals aplicados: {[c.__name__ for c in allowed_globals]}")
+            except AttributeError:
+                pass
+            
         token = os.environ.get('HF_TOKEN')
         
         try:
