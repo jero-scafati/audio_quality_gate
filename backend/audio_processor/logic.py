@@ -71,9 +71,6 @@ def extract_fixed_chunks(
     step_duration_s: float = 2.0,
     min_chunk_duration_s: float = 2.0
 ):
-    """
-    Tu función original para cortar el audio manualmente.
-    """
     num_frames = waveform.shape[1]
     chunk_size_frames = int(chunk_duration_s * sample_rate)
     step_size_frames = int(step_duration_s * sample_rate)
@@ -120,7 +117,7 @@ def verify_multispeaker(file_path):
         if not all_embeddings:
             return False
 
-        # 5. Clustering (Tu lógica original)
+        # 5. Clustering
         embeddings_np = np.vstack(all_embeddings)
         
         if embeddings_np.shape[0] < 2:
@@ -130,7 +127,7 @@ def verify_multispeaker(file_path):
         
         clustering = AgglomerativeClustering(
             n_clusters=None,
-            distance_threshold=0.6, # Tu umbral original
+            distance_threshold=0.6,
             metric='cosine',
             linkage='complete'
         ).fit(X_normalized)
@@ -144,6 +141,4 @@ def verify_multispeaker(file_path):
         import traceback
         print(f"❌ Error procesando audio: {e}")
         traceback.print_exc()
-        # En caso de error técnico, mejor no rechazar falsamente (o sí, depende tu política)
-        # Para debug, devolvemos True para que salte a la vista
         return True

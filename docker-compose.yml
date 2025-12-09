@@ -12,13 +12,13 @@ services:
     ports:
       - "5432:5432"
 
-  api:  # Le cambié el nombre de 'web' a 'api' para diferenciarlo del frontend
+  api:
     build: 
-      context: ./backend  # <--- CAMBIO IMPORTANTE: Apunta a la carpeta backend
+      context: ./backend
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./backend:/app    # <--- CAMBIO IMPORTANTE: Mapeamos la carpeta backend
+      - ./backend:/app
     ports:
       - "8000:8000"
     env_file:
@@ -34,7 +34,7 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/app
-      - /app/node_modules # Truco para que no pise los módulos de Linux
+      - /app/node_modules
     depends_on:
       - api
 volumes:
