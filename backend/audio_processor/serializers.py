@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AudioAnalysis
+from .models import AudioAnalysis, AuditLog
 
 class AudioAnalysisSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +21,8 @@ class AudioAnalysisSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Solo se permiten archivos de audio.")
 
         return value
+
+class AuditLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuditLog
+        fields = '__all__'
